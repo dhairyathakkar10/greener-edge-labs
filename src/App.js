@@ -1,10 +1,10 @@
-import heroSectionImage from "./assets/images/heroSection.jpeg";
 import "./App.css";
+import { HomePage } from "./pages/HomePage/HomePage";
 
 function App() {
   return (
     <div className="App">
-      <img src={heroSectionImage} />
+      <HomePage />
     </div>
   );
 }
