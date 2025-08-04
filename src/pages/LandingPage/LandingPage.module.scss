@@ -1,0 +1,53 @@
+.LandingPageContainer {
+  background: url(../../assets/images/LandingPageBG.webp);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  height: 100%;
+  width: 100%;
+}
+
+.LandingPageData {
+  height: 35%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  .heading {
+    h1 {
+      text-transform: uppercase;
+      font-size: 2rem;
+    }
+    span {
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+  }
+  .tagLine {
+    font-size: 4rem;
+  }
+  button {
+    background-color: #ede1ce;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    border: none;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .LandingPageData {
+    .heading {
+      h1 {
+        font-size: 3rem !important;
+      }
+      span {
+        font-size: 1.6rem !important;
+      }
+    }
+    button {
+      font-size: 1.6rem !important;
+    }
+    .tagLine {
+      font-size: 4rem !important;
+    }
+  }
+}
