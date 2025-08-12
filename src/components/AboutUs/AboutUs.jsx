@@ -3,11 +3,11 @@ import styles from "./AboutUs.module.scss";
 export const AboutUs = () => {
   return (
     <section id="about" className={`${styles.aboutSectionContainer} py-20 bg-white`}>
-      <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+      <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
         <div className={`${styles.aboutUsText} text-left`}>
-          <h2 class="text-3xl font-bold mb-4">About Infinity</h2>
-          <p class="mb-4 text-lg text-[#36454F]/80">At Greener Edge Labs, our mission is to redefine the building materials industry. We believe that beauty and sustainability are not mutually exclusive.</p>
-          <p class="text-[#36454F]/80">Infinity is the culmination of years of research, a testament to innovation that challenges the status quo. By replacing cement and sand with recycled industrial by-products, we've created a terrazzo that is not only stronger and more versatile but actively helps heal our planet by sequestering carbon.</p>
+          <h2 className="text-3xl font-bold mb-4">About Infinity</h2>
+          <p className="mb-4 text-lg text-[#36454F]/80">At Greener Edge Labs, our mission is to redefine the building materials industry. We believe that beauty and sustainability are not mutually exclusive.</p>
+          <p className="text-[#36454F]/80">Infinity is the culmination of years of research, a testament to innovation that challenges the status quo. By replacing cement and sand with recycled industrial by-products, we've created a terrazzo that is not only stronger and more versatile but actively helps heal our planet by sequestering carbon.</p>
         </div>
         <div className={styles.aboutUsImg}>
           <svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
