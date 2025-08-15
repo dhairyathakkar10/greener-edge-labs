@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
+import emailjs from "@emailjs/browser";
 
 export const Contact = () => {
+  const form = useRef();
   const [formDetails, setFormDetails] = useState({
     name: "",
     emailId: "",
@@ -9,11 +12,31 @@ export const Contact = () => {
     product: "Cast-In-Situ Flooring",
     message: "",
   });
+  const [isSaveButtonDisabled, setIsSaveButtonDisabled] = useState(false);
+  const [mailMessage, setMailMessage] = useState("");
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", form.current, {
+        publicKey: "YOUR_PUBLIC_KEY",
+      })
+      .then(
+        () => {
+          console.log("We've got your requirement, We'll contact you shortly");
+        },
+        (error) => {
+          setMailMessage("Sorry for inconvenience, Please try again later!");
+          console.log("FAILED...", error.text);
+        }
+      );
+  };
   return (
     <section id="contact" className="py-20">
       <div className="container mx-auto px-6 max-w-2xl">
         <h2 className="text-3xl font-bold text-center mb-8">Start Your Project Today</h2>
-        <form id="contact-form" className="bg-white p-8 rounded-xl shadow-xl space-y-6">
+        <form ref={form} id="contact-form" className="bg-white p-8 rounded-xl shadow-xl space-y-6" onSubmit={sendEmail}>
           <div>
             <label htmlFor="name" className="block font-bold mb-1">
               Full Name
@@ -128,8 +151,10 @@ export const Contact = () => {
               placeholder="Describe your project idea here... e.g., 'A modern cafe with a warm, inviting feel, about 1500 sqft'"
             ></textarea>
           </div>
+          <ReCAPTCHA sitekey="6LexW6crAAAAANmQcc1Ond_KV3L3m5RPxNsXMTkr" onChange={() => setIsSaveButtonDisabled(false)} onExpired={() => setIsSaveButtonDisabled(false)} />
           <div className="text-center">
-            <button type="submit" className="w-full bg-[#E2725B] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-[#d1614a] transition-transform hover:scale-105 shadow-lg">
+            {mailMessage}
+            <button type="submit" className="w-full bg-[#E2725B] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-[#d1614a] transition-transform hover:scale-105 shadow-lg disabled:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100" disabled={isSaveButtonDisabled}>
               Send Enquiry
             </button>
           </div>
