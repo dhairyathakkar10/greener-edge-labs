@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import emailjs from "@emailjs/browser";
+import styles from "./Contact.module.scss";
 
 export const Contact = () => {
   const form = useRef();
@@ -12,8 +13,22 @@ export const Contact = () => {
     product: "Cast-In-Situ Flooring",
     message: "",
   });
+  const [formError, setFormError] = useState({
+    isNameValid: undefined,
+    isEmailValid: undefined,
+    isPhoneNumberValid: undefined,
+    isProjectSizeValid: undefined,
+    isMessageValid: undefined,
+  });
   const [isSaveButtonDisabled, setIsSaveButtonDisabled] = useState(false);
   const [mailMessage, setMailMessage] = useState("");
+  useEffect(() => {
+    if (mailMessage !== "") {
+      setTimeout(() => {
+        setMailMessage("");
+      }, 5000);
+    }
+  }, [mailMessage]);
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -47,12 +62,17 @@ export const Contact = () => {
               name="name"
               value={formDetails.name}
               onChange={(e) => {
+                if (e.target.value === "") {
+                  setFormError({ ...formError, isNameValid: false });
+                } else {
+                  setFormError({ ...formError, isNameValid: true });
+                }
                 setFormDetails({ ...formDetails, name: e.target.value });
               }}
               className="w-full p-3 border border-gray-300 rounded-lg"
               placeholder="John Doe"
-              required
             />
+            <div className="w-full text-left">{formError.isNameValid === false && <span className={styles.inputError}>{"Name is Required"}</span>}</div>
           </div>
           <div>
             <label htmlFor="phoneNumber" className="block font-bold mb-1">
@@ -61,11 +81,12 @@ export const Contact = () => {
             <input
               value={formDetails.phoneNumber}
               onChange={(e) => {
-                if (formDetails.phoneNumber === "") {
-                  setFormDetails({ ...formDetails, phoneNumber: "+91 " + e.target.value });
+                if (e.target.value.length === 10) {
+                  setFormError({ ...formError, isPhoneNumberValid: true });
                 } else {
-                  setFormDetails({ ...formDetails, phoneNumber: e.target.value });
+                  setFormError({ ...formError, isPhoneNumberValid: false });
                 }
+                setFormDetails({ ...formDetails, phoneNumber: e.target.value });
               }}
               type="text"
               id="phoneNumber"
@@ -74,15 +95,21 @@ export const Contact = () => {
               placeholder="8888899999"
               required
             />
+            <div className="w-full text-left">{formError.isPhoneNumberValid === false && <span className={styles.inputError}>{"Please enter a valid Phone number"}</span>}</div>
           </div>
           <div>
             <label htmlFor="email" className="block font-bold mb-1">
               Email
             </label>
             <input
-              type="text"
+              type="email"
               value={formDetails.emailId}
               onChange={(e) => {
+                if (new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "g").test(e.target.value)) {
+                  setFormError({ ...formError, isEmailValid: true });
+                } else {
+                  setFormError({ ...formError, isEmailValid: false });
+                }
                 setFormDetails({ ...formDetails, emailId: e.target.value });
               }}
               id="email"
@@ -91,6 +118,7 @@ export const Contact = () => {
               placeholder="hello@example.com"
               required
             />
+            <div className="w-full text-left">{formError.isEmailValid === false && <span className={styles.inputError}>{"Please enter a valid Email ID"}</span>}</div>
           </div>
           <div>
             <label htmlFor="project-size" className="block font-bold mb-1">
@@ -100,6 +128,11 @@ export const Contact = () => {
               type="number"
               value={formDetails.projectSize}
               onChange={(e) => {
+                if (e.target.value === "") {
+                  setFormError({ ...formError, isProjectSizeValid: false });
+                } else {
+                  setFormError({ ...formError, isProjectSizeValid: true });
+                }
                 setFormDetails({ ...formDetails, projectSize: e.target.value });
               }}
               id="project-size"
@@ -107,6 +140,7 @@ export const Contact = () => {
               className="w-full p-3 border border-gray-300 rounded-lg"
               placeholder="2500"
             />
+            <div className="w-full text-left">{formError.isProjectSizeValid === false && <span className={styles.inputError}>{"Please enter a valid Project Size"}</span>}</div>
           </div>
           <div>
             <label htmlFor="interest" className="block font-bold mb-1">
@@ -141,8 +175,12 @@ export const Contact = () => {
             <textarea
               value={formDetails.message}
               onChange={(e) => {
+                if (e.target.value === "") {
+                  setFormError({ ...formError, isMessageValid: false });
+                } else {
+                  setFormError({ ...formError, isMessageValid: true });
+                }
                 setFormDetails({ ...formDetails, message: e.target.value });
-                console.log(formDetails);
               }}
               id="message"
               name="message"
@@ -150,11 +188,12 @@ export const Contact = () => {
               className="w-full p-3 border border-gray-300 rounded-lg"
               placeholder="Describe your project idea here... e.g., 'A modern cafe with a warm, inviting feel, about 1500 sqft'"
             ></textarea>
+            <div className="w-full text-left">{formError.isMessageValid === false && <span className={styles.inputError}>{"Please enter a valid Message"}</span>}</div>
           </div>
           <ReCAPTCHA sitekey="6LexW6crAAAAANmQcc1Ond_KV3L3m5RPxNsXMTkr" onChange={() => setIsSaveButtonDisabled(false)} onExpired={() => setIsSaveButtonDisabled(false)} />
           <div className="text-center">
             {mailMessage}
-            <button type="submit" className="w-full bg-[#E2725B] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-[#d1614a] transition-transform hover:scale-105 shadow-lg disabled:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100" disabled={isSaveButtonDisabled}>
+            <button type="submit" className="w-full bg-[#E2725B] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-[#d1614a] transition-transform hover:scale-105 shadow-lg disabled:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100" disabled={isSaveButtonDisabled || !formError.isNameValid || !formError.isEmailValid || !formError.isPhoneNumberValid || !formError.isProjectSizeValid || !formError.isMessageValid}>
               Send Enquiry
             </button>
           </div>
