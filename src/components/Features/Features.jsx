@@ -1,10 +1,10 @@
 import styles from "./Features.module.scss";
 export const Features = () => {
   return (
-    <section id="features" className="py-20" className={`${styles.differentSection} py-20`}>
+    <section id="features" className={`${styles.differentSection} py-20`}>
       <div className="container mx-auto px-6">
         <h2 className="text-3xl font-bold text-center mb-12">What Makes Us Different</h2>
-        <div className="horizontal-scroll pb-6 -mx-6 px-6" className={styles.innerContainer}>
+        <div className={`${styles.innerContainer} horizontal-scroll pb-6 -mx-6 px-6`}>
           <div className="flex space-x-8">
             <div className="flex-shrink-0 w-64 bg-white p-6 rounded-xl shadow-lg text-center">
               <h3 className="font-bold text-lg mb-2">Zero Cement</h3>
