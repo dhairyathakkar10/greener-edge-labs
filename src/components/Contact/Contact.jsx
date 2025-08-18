@@ -21,6 +21,7 @@ export const Contact = () => {
     isMessageValid: undefined,
   });
   const [isSaveButtonDisabled, setIsSaveButtonDisabled] = useState(false);
+  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
   const [mailMessage, setMailMessage] = useState("");
   useEffect(() => {
     if (mailMessage !== "") {
@@ -190,10 +191,17 @@ export const Contact = () => {
             ></textarea>
             <div className="w-full text-left">{formError.isMessageValid === false && <span className={styles.inputError}>{"Please enter a valid Message"}</span>}</div>
           </div>
-          <ReCAPTCHA sitekey="6LexW6crAAAAANmQcc1Ond_KV3L3m5RPxNsXMTkr" onChange={() => setIsSaveButtonDisabled(false)} onExpired={() => setIsSaveButtonDisabled(false)} />
+          <ReCAPTCHA
+            sitekey="6LexW6crAAAAANmQcc1Ond_KV3L3m5RPxNsXMTkr"
+            onChange={(e) => {
+              console.log(e);
+              setIsCaptchaVerified(true);
+            }}
+            onExpired={() => setIsCaptchaVerified(false)}
+          />
           <div className="text-center">
             {mailMessage}
-            <button type="submit" className="w-full bg-[#E2725B] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-[#d1614a] transition-transform hover:scale-105 shadow-lg disabled:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100" disabled={isSaveButtonDisabled || !formError.isNameValid || !formError.isEmailValid || !formError.isPhoneNumberValid || !formError.isProjectSizeValid || !formError.isMessageValid}>
+            <button type="submit" className="w-full bg-[#E2725B] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-[#d1614a] transition-transform hover:scale-105 shadow-lg disabled:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100" disabled={isSaveButtonDisabled || !formError.isNameValid || !formError.isEmailValid || !formError.isPhoneNumberValid || !formError.isProjectSizeValid || !formError.isMessageValid || !isCaptchaVerified}>
               Send Enquiry
             </button>
           </div>
