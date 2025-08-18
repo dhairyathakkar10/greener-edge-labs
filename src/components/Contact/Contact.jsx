@@ -192,9 +192,8 @@ export const Contact = () => {
             <div className="w-full text-left">{formError.isMessageValid === false && <span className={styles.inputError}>{"Please enter a valid Message"}</span>}</div>
           </div>
           <ReCAPTCHA
-            sitekey="6LexW6crAAAAANmQcc1Ond_KV3L3m5RPxNsXMTkr"
+            sitekey="6LeXhaorAAAAAGKhOiA_CxXFFpOVoYQLuE-76UQG"
             onChange={(e) => {
-              console.log(e);
               setIsCaptchaVerified(true);
             }}
             onExpired={() => setIsCaptchaVerified(false)}
