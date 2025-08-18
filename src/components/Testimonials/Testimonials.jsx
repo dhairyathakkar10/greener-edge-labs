@@ -2,7 +2,7 @@ export const Testimonials = () => {
   return (
     <section id="testimonials" className="py-20 bg-white">
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-12">What Our Clients Say</h2>
+        <h2 className="text-3xl font-bold text-center mb-12 text-[#2E2E2E]">What Our Clients Say</h2>
         <div className="relative max-w-3xl mx-auto">
           <div id="testimonial-slider" className="overflow-hidden">
             <div id="testimonial-container" className="flex transition-transform duration-500 ease-in-out">

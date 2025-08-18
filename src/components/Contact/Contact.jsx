@@ -50,7 +50,7 @@ export const Contact = () => {
   return (
     <section id="contact" className="py-20">
       <div className="container mx-auto px-6 max-w-2xl">
-        <h2 className="text-3xl font-bold text-center mb-8">Start Your Project Today</h2>
+        <h2 className="text-3xl font-bold text-center mb-8 text-[#2E2E2E]">Start Your Project Today</h2>
         <form ref={form} id="contact-form" className="bg-white p-8 rounded-xl shadow-xl space-y-6" onSubmit={sendEmail}>
           <div>
             <label htmlFor="name" className="block font-bold mb-1">

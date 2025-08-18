@@ -2,7 +2,7 @@ export const Products = () => {
   return (
     <section id="products" className="py-20 bg-white">
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-12">Products & Services</h2>
+        <h2 className="text-3xl font-bold text-center mb-12 text-[#2E2E2E]">Products & Services</h2>
         <div className="grid md:grid-cols-3 gap-8">
           <div className="product-card group cursor-pointer" data-title="Cast-In-Situ Flooring" data-text="Seamless, durable flooring poured on-site for a flawless finish. Ideal for large commercial and residential spaces.">
             <div className="relative rounded-xl overflow-hidden shadow-lg">

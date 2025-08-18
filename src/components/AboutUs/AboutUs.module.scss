@@ -1,6 +1,9 @@
 .aboutSectionContainer {
   .aboutUsText {
     max-width: 100vw;
+    h2 {
+      color: #2e2e2e;
+    }
   }
   @media only screen and (max-width: 600px) {
     .aboutUsImg svg {

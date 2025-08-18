@@ -1,69 +1,92 @@
+import { useState } from "react";
+
 export const Calculator = () => {
+  const [area, setArea] = useState(1000);
+  const [areaForCalculation, setAreaForCalculation] = useState(1000);
+  const [type, setType] = useState("Infinity");
+  const [finish, setFinish] = useState("standard");
+  const terrazzoPricing = finish === "standard" ? areaForCalculation * 250 : finish === "premium" ? areaForCalculation * 350 : areaForCalculation * 450;
+  const normalPricing = finish === "standard" ? areaForCalculation * 450 : finish === "premium" ? areaForCalculation * 550 : areaForCalculation * 650;
   return (
     <section id="calculators" className="py-20">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           <div className="space-y-16">
             <div className="bg-white p-8 rounded-xl shadow-xl">
-              <h2 className="text-3xl font-bold text-center mb-6">Calculate Your Carbon Savings</h2>
+              <h2 className="text-3xl font-bold text-center mb-6 text-[#2E2E2E]">Calculate Your Carbon Savings</h2>
               <form id="carbon-calculator">
                 <div className="mb-4">
                   <label htmlFor="carbon-area" className="block font-bold mb-1">
                     Floor Area
                   </label>
                   <div className="flex">
-                    <input type="number" id="carbon-area" value="1000" className="w-full p-3 border border-gray-300 rounded-l-lg" aria-label="Floor Area" placeholder="e.g., 1000" />
-                    <select id="carbon-unit" className="p-3 border border-l-0 border-gray-300 rounded-r-lg bg-gray-50">
-                      <option value="sqft">sqft</option>
-                      <option value="sqm">sqm</option>
-                    </select>
+                    <input type="number" id="carbon-area" value={area} onChange={(e) => setArea(e.target.value)} className="w-full p-3 border border-gray-300 rounded-l-lg" aria-label="Floor Area" placeholder="e.g., 1000" />
+                    <div id="carbon-unit" className="p-3 border border-l-0 border-gray-300 rounded-r-lg bg-gray-50">
+                      <p>sqft</p>
+                    </div>
                   </div>
                 </div>
                 <div className="mb-6">
                   <label htmlFor="terrazzo-type" className="block font-bold mb-1">
                     Terrazzo Type
                   </label>
-                  <select id="terrazzo-type" className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50">
+                  <select id="terrazzo-type" value={type} onChange={(e) => setType(e.target.value)} className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50">
                     <option value="infinity">Infinity Eco-Terrazzo</option>
                     <option value="traditional">Traditional Terrazzo</option>
                   </select>
                 </div>
-                <div id="carbon-results" className="text-center bg-[#FDEFEA] p-6 rounded-lg"></div>
+                <div id="carbon-results" className="text-center bg-[#FDEFEA] p-6 rounded-lg">
+                  <p className="text-xl">CO₂ Footprint: {type === "infinity" ? <span className="font-extrabold text-[#5cb562]">{((area / 5) * -1).toFixed(2)} Kg</span> : <span className="font-extrabold text-[#E2725B]">{(area / 1.25).toFixed(2)} Kg</span>}</p>
+                  {type === "infinity" && <p className="font-bold text-[#E2725B] text-xl">Total Carbon Savings: {area || 0} kg CO₂</p>}
+                  <span className="text-sm">{type === "infinity" ? "Compared to traditional terrazzo for the same area." : "Switch to Infinity to see your potential savings!"}</span>
+                </div>
               </form>
             </div>
 
             <div className="bg-white p-8 rounded-xl shadow-xl">
-              <h2 className="text-3xl font-bold text-center mb-6">Estimate Your Project Cost</h2>
+              <h2 className="text-3xl font-bold text-center mb-6 text-[#2E2E2E]">Estimate Your Project Cost</h2>
               <form id="cost-calculator">
                 <div className="mb-4">
                   <label htmlFor="cost-area" className="block font-bold mb-1">
                     Floor Area
                   </label>
                   <div className="flex">
-                    <input type="number" id="cost-area" value="1000" className="w-full p-3 border border-gray-300 rounded-l-lg" aria-label="Project Area" placeholder="e.g., 1000" />
-                    <select id="cost-unit" className="p-3 border border-l-0 border-gray-300 rounded-r-lg bg-gray-50">
-                      <option value="sqft">sqft</option>
-                      <option value="sqm">sqm</option>
-                    </select>
+                    <input type="number" id="cost-area" value={areaForCalculation} onChange={(e) => setAreaForCalculation(e.target.value)} className="w-full p-3 border border-gray-300 rounded-l-lg" aria-label="Project Area" placeholder="e.g., 1000" />
+                    <div id="carbon-unit" className="p-3 border border-l-0 border-gray-300 rounded-r-lg bg-gray-50">
+                      <p>sqft</p>
+                    </div>
                   </div>
                 </div>
                 <div className="mb-6">
                   <label htmlFor="finish-type" className="block font-bold mb-1">
                     Finish Type
                   </label>
-                  <select id="finish-type" className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50">
+                  <select id="finish-type" value={finish} onChange={(e) => setFinish(e.target.value)} className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50">
                     <option value="standard">Standard Finish</option>
                     <option value="premium">Premium Finish</option>
                     <option value="designer">Designer Finish</option>
                   </select>
                 </div>
-                <div id="cost-results" className="space-y-4"></div>
+                {/* <div id="cost-results" className="space-y-4"></div> */}
+                <div id="cost-results" class="space-y-4 text-left">
+                  <div class="bg-[#FDEFEA] p-4 rounded-lg border border-[#E2725B]/50">
+                    <h4 class="font-bold text-[#E2725B]">Infinity Eco-Terrazzo</h4>
+                    <p class="text-2xl font-extrabold text-[#36454F]">₹{terrazzoPricing.toLocaleString("en-IN")}</p>
+                  </div>
+                  <div class="bg-gray-100 p-4 rounded-lg border border-gray-300">
+                    <h4 class="font-bold text-gray-600">Traditional Terrazzo</h4>
+                    <p class="text-2xl font-extrabold text-gray-700">₹{normalPricing.toLocaleString("en-IN")}</p>
+                  </div>
+                  <div class="text-center mt-4">
+                    <p class="font-bold text-[#5cb562]">You save an estimated ₹{(normalPricing - terrazzoPricing).toLocaleString("en-IN")} with Infinity!</p>
+                  </div>
+                </div>
               </form>
             </div>
           </div>
 
           <div className="bg-white p-8 rounded-xl shadow-xl sticky top-28">
-            <h2 className="text-3xl font-bold text-center mb-8">Traditional vs. Infinity</h2>
+            <h2 className="text-3xl font-bold text-center mb-8 text-[#2E2E2E]">Traditional vs. Infinity</h2>
             <div className="space-y-6">
               <div className="grid grid-cols-3 items-center text-center">
                 <span className="font-bold text-lg">Traditional</span>

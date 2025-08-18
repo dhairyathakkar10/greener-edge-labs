@@ -2,7 +2,7 @@ import styles from "./HeroSection.module.scss";
 
 export const HeroSection = () => {
   return (
-    <div className={styles.heroSectionContainer}>
+    <div className={styles.heroSectionContainer} id="heroSection">
       <div className="container mx-auto px-6 text-center">
         <h1 className="text-4xl md:text-6xl font-bold text-[#36454F] leading-tight">
           The Future of Terrazzo—

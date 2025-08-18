@@ -46,7 +46,9 @@ export const Header = (props) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={styles.navBarLogo} component="div" sx={{ flexGrow: 1, textAlign: "left", display: { sm: "block" } }}>
-            Infinity <span>by Greener Edge Labs</span>
+            <a href="#heroSection">
+              Infinity <span>by Greener Edge Labs</span>
+            </a>
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
