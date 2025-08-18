@@ -167,10 +167,10 @@ export const Contact = () => {
               <label htmlFor="message" className="block font-bold">
                 Message / Project Idea
               </label>
-              <button type="button" id="generate-vision-btn" className="text-sm text-[#E2725B] hover:underline flex items-center gap-1">
+              {/* <button type="button" id="generate-vision-btn" className="text-sm text-[#E2725B] hover:underline flex items-center gap-1">
                 ✨ Generate Project Vision
                 <span id="vision-spinner" className="spinner hidden"></span>
-              </button>
+              </button> */}
             </div>
             <textarea
               value={formDetails.message}

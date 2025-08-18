@@ -24,6 +24,9 @@ code {
 a {
   text-decoration: none;
 }
+input:focus-visible {
+  outline: #214e34 solid 2px;
+}
 @media only screen and (max-width: 600px) {
   html {
     font-size: 10px;
