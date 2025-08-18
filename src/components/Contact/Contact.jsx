@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import emailjs from "@emailjs/browser";
 import styles from "./Contact.module.scss";
+import { CircularProgress } from "@mui/material";
 
 export const Contact = () => {
   const form = useRef();
@@ -20,9 +21,9 @@ export const Contact = () => {
     isProjectSizeValid: undefined,
     isMessageValid: undefined,
   });
-  const [isSaveButtonDisabled, setIsSaveButtonDisabled] = useState(false);
   const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
   const [mailMessage, setMailMessage] = useState("");
+  const [isSendingMessage, setIsSendingMessage] = useState(false);
   useEffect(() => {
     if (mailMessage !== "") {
       setTimeout(() => {
@@ -32,19 +33,22 @@ export const Contact = () => {
   }, [mailMessage]);
 
   const sendEmail = (e) => {
+    setIsSendingMessage(true);
     e.preventDefault();
 
     emailjs
-      .sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", form.current, {
-        publicKey: "YOUR_PUBLIC_KEY",
+      .sendForm("service_qbaia7c", "template_44yl6dr", form.current, {
+        publicKey: "PUPGzBEH2-4pjB1U0",
       })
       .then(
         () => {
-          console.log("We've got your requirement, We'll contact you shortly");
+          setMailMessage("We've got your requirement, We'll contact you shortly");
+          setIsSendingMessage(false);
         },
         (error) => {
           setMailMessage("Sorry for inconvenience, Please try again later!");
           console.log("FAILED...", error.text);
+          setIsSendingMessage(false);
         }
       );
   };
@@ -200,8 +204,8 @@ export const Contact = () => {
           />
           <div className="text-center">
             {mailMessage}
-            <button type="submit" className="w-full bg-[#E2725B] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-[#d1614a] transition-transform hover:scale-105 shadow-lg disabled:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100" disabled={isSaveButtonDisabled || !formError.isNameValid || !formError.isEmailValid || !formError.isPhoneNumberValid || !formError.isProjectSizeValid || !formError.isMessageValid || !isCaptchaVerified}>
-              Send Enquiry
+            <button type="submit" className="w-full bg-[#E2725B] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-[#d1614a] transition-transform hover:scale-105 shadow-lg disabled:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100" disabled={isSendingMessage || !formError.isNameValid || !formError.isEmailValid || !formError.isPhoneNumberValid || !formError.isProjectSizeValid || !formError.isMessageValid || !isCaptchaVerified}>
+              {isSendingMessage ? <CircularProgress size={24} color="#5cb562" /> : "Send Enquiry"}
             </button>
           </div>
           <div id="form-success-message" className="hidden text-center p-3 bg-green-100 text-green-800 rounded-lg">
