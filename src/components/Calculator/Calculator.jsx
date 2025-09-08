@@ -1,12 +1,32 @@
+import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
+import { PARKING_TILE_SIZES, PATTERN_TILE_SIZES, TERRAZZO_AND_PATTERN_TILE_THICKNESS, TERRAZZO_TILE_SIZES, WALL_AND_PARKING_TILE_THICKNESS, WALL_TILE_SIZES } from "./Calculator.const";
+import styles from "./Calculator.module.scss";
 
 export const Calculator = () => {
   const [area, setArea] = useState(1000);
   const [areaForCalculation, setAreaForCalculation] = useState(1000);
   const [type, setType] = useState("Infinity");
   const [finish, setFinish] = useState("standard");
+  const [tabValue, setTabValue] = useState(0);
+  const [tileType, setTileType] = useState("Terrazzo");
+  const [tileSizeArr, setTileSizeArr] = useState(TERRAZZO_TILE_SIZES);
+  const [tileSize, setTileSize] = useState(TERRAZZO_TILE_SIZES[0]);
+  const [tileThicknessArr, setTileThicknessArr] = useState(TERRAZZO_AND_PATTERN_TILE_THICKNESS);
+  const [tileThickness, setTileThickness] = useState(TERRAZZO_AND_PATTERN_TILE_THICKNESS[0]);
   const terrazzoPricing = finish === "standard" ? areaForCalculation * 250 : finish === "premium" ? areaForCalculation * 350 : areaForCalculation * 450;
   const normalPricing = finish === "standard" ? areaForCalculation * 450 : finish === "premium" ? areaForCalculation * 550 : areaForCalculation * 650;
+
+  const CustomTabPanel = (props) => {
+    const { children, value, index, ...other } = props;
+
+    return (
+      <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} aria-labelledby={`simple-tab-${index}`} {...other}>
+        {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      </div>
+    );
+  };
+
   return (
     <section id="calculators" className="py-20">
       <div className="container mx-auto px-6">
@@ -45,43 +65,152 @@ export const Calculator = () => {
 
             <div className="bg-white p-8 rounded-xl shadow-xl">
               <h2 className="text-3xl font-bold text-center mb-6 text-[#2E2E2E]">Estimate Your Project Cost</h2>
-              <form id="cost-calculator">
-                <div className="mb-4">
-                  <label htmlFor="cost-area" className="block font-bold mb-1">
-                    Floor Area
-                  </label>
-                  <div className="flex">
-                    <input type="number" id="cost-area" value={areaForCalculation} onChange={(e) => setAreaForCalculation(e.target.value)} className="w-full p-3 border border-gray-300 rounded-l-lg" aria-label="Project Area" placeholder="e.g., 1000" />
-                    <div id="carbon-unit" className="p-3 border border-l-0 border-gray-300 rounded-r-lg bg-gray-50">
-                      <p>sqft</p>
+              <div className={styles.tabs}>
+                <Tabs value={tabValue} onChange={(e, newValue) => setTabValue(newValue)} aria-label="basic tabs example">
+                  <Tab label="Cast-In-Situ" />
+                  <Tab label="Tiles" />
+                </Tabs>
+                <CustomTabPanel value={tabValue} index={0}>
+                  <form id="cost-calculator">
+                    <div className="mb-4">
+                      <label htmlFor="cost-area" className="block font-bold mb-1">
+                        Floor Area
+                      </label>
+                      <div className="flex">
+                        <input type="number" id="cost-area" value={areaForCalculation} onChange={(e) => setAreaForCalculation(e.target.value)} className="w-full p-3 border border-gray-300 rounded-l-lg" aria-label="Project Area" placeholder="e.g., 1000" />
+                        <div id="carbon-unit" className="p-3 border border-l-0 border-gray-300 rounded-r-lg bg-gray-50">
+                          <p>sqft</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mb-6">
+                      <label htmlFor="finish-type" className="block font-bold mb-1">
+                        Finish Type
+                      </label>
+                      <select id="finish-type" value={finish} onChange={(e) => setFinish(e.target.value)} className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50">
+                        <option value="standard">Standard Finish</option>
+                        <option value="premium">Premium Finish</option>
+                        <option value="designer">Designer Finish</option>
+                      </select>
+                    </div>
+                    {/* <div id="cost-results" className="space-y-4"></div> */}
+                    <div id="cost-results" class="space-y-4 text-left">
+                      <div class="bg-[#FDEFEA] p-4 rounded-lg border border-[#E2725B]/50">
+                        <h4 class="font-bold text-[#E2725B]">Infinity Eco-Terrazzo</h4>
+                        <p class="text-2xl font-extrabold text-[#36454F]">₹{terrazzoPricing.toLocaleString("en-IN")}</p>
+                      </div>
+                      <div class="bg-gray-100 p-4 rounded-lg border border-gray-300">
+                        <h4 class="font-bold text-gray-600">Traditional Terrazzo</h4>
+                        <p class="text-2xl font-extrabold text-gray-700">₹{normalPricing.toLocaleString("en-IN")}</p>
+                      </div>
+                      <div class="text-center mt-4">
+                        <p class="font-bold text-[#5cb562]">You save an estimated ₹{(normalPricing - terrazzoPricing).toLocaleString("en-IN")} with Infinity!</p>
+                      </div>
+                    </div>
+                  </form>
+                </CustomTabPanel>
+                <CustomTabPanel value={tabValue} index={1}>
+                  <div className="mb-6">
+                    <label htmlFor="tile-type" className="block font-bold mb-1">
+                      Tile Type
+                    </label>
+                    <select
+                      id="tile-type"
+                      value={tileType}
+                      onChange={(e) => {
+                        setTileType(e.target.value);
+                        if (e.target.value === "Terrazzo") {
+                          setTileSizeArr(TERRAZZO_TILE_SIZES);
+                          setTileSize(TERRAZZO_TILE_SIZES[0]);
+                          setTileThicknessArr(TERRAZZO_AND_PATTERN_TILE_THICKNESS);
+                          setTileThickness(TERRAZZO_AND_PATTERN_TILE_THICKNESS[0]);
+                        } else if (e.target.value === "Pattern") {
+                          setTileSizeArr(PATTERN_TILE_SIZES);
+                          setTileSize(PATTERN_TILE_SIZES[0]);
+                          setTileThicknessArr(TERRAZZO_AND_PATTERN_TILE_THICKNESS);
+                          setTileThickness(TERRAZZO_AND_PATTERN_TILE_THICKNESS[0]);
+                        } else if (e.target.value === "Wall") {
+                          setTileSizeArr(WALL_TILE_SIZES);
+                          setTileSize(WALL_TILE_SIZES[0]);
+                          setTileThicknessArr(WALL_AND_PARKING_TILE_THICKNESS);
+                          setTileThickness(WALL_AND_PARKING_TILE_THICKNESS[0]);
+                        } else if (e.target.value === "Parking") {
+                          setTileSizeArr(PARKING_TILE_SIZES);
+                          setTileSize(PARKING_TILE_SIZES[0]);
+                          setTileThicknessArr(WALL_AND_PARKING_TILE_THICKNESS);
+                          setTileThickness(WALL_AND_PARKING_TILE_THICKNESS[0]);
+                        }
+                      }}
+                      className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50"
+                    >
+                      <option value="Terrazzo">Terrazzo Tile</option>
+                      <option value="Pattern">Pattern Tile</option>
+                      <option value="Wall">Wall Tile</option>
+                      <option value="Parking">Parking Tile</option>
+                    </select>
+                  </div>
+                  <div className="mb-6">
+                    <label htmlFor="tile-size" className="block font-bold mb-1">
+                      Tile Size
+                    </label>
+                    <select
+                      disabled={!tileType}
+                      id="tile-size"
+                      value={tileSize}
+                      onChange={(e) => {
+                        setTileSize(e.target.value);
+                      }}
+                      className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50"
+                    >
+                      {tileSizeArr.map((size) => (
+                        <option value={size}>{size}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="mb-6">
+                    <label htmlFor="tile-thickness" className="block font-bold mb-1">
+                      Tile Thickness
+                    </label>
+                    <select
+                      disabled={!tileSize}
+                      id="tile-thickness"
+                      value={tileThickness}
+                      onChange={(e) => {
+                        setTileThickness(e.target.value);
+                        // if (e.target.value === "Terrazzo" || e.target.value === "Pattern") {
+                        //   setTileThicknessArr(TERRAZZO_AND_PATTERN_TILE_THICKNESS);
+                        //   setTileThickness(TERRAZZO_AND_PATTERN_TILE_THICKNESS[0]);
+                        // } else if (e.target.value === "Wall" || e.target.value === "Parking") {
+                        //   setTileThicknessArr(WALL_AND_PARKING_TILE_THICKNESS);
+                        //   setTileThickness(WALL_AND_PARKING_TILE_THICKNESS[0]);
+                        // }
+                      }}
+                      className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50"
+                    >
+                      {tileThicknessArr.map((size) => (
+                        <option value={size}>{size}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="mb-6">
+                    <label htmlFor="carbon-area" className="block font-bold mb-1">
+                      Floor Area
+                    </label>
+                    <div className="flex">
+                      <input type="number" id="carbon-area" value={area} onChange={(e) => setArea(e.target.value)} className="w-full p-3 border border-gray-300 rounded-l-lg" aria-label="Floor Area" placeholder="e.g., 1000" />
+                      <div id="carbon-unit" className="p-3 border border-l-0 border-gray-300 rounded-r-lg bg-gray-50">
+                        <p>sqft</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="mb-6">
-                  <label htmlFor="finish-type" className="block font-bold mb-1">
-                    Finish Type
-                  </label>
-                  <select id="finish-type" value={finish} onChange={(e) => setFinish(e.target.value)} className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50">
-                    <option value="standard">Standard Finish</option>
-                    <option value="premium">Premium Finish</option>
-                    <option value="designer">Designer Finish</option>
-                  </select>
-                </div>
-                {/* <div id="cost-results" className="space-y-4"></div> */}
-                <div id="cost-results" class="space-y-4 text-left">
-                  <div class="bg-[#FDEFEA] p-4 rounded-lg border border-[#E2725B]/50">
-                    <h4 class="font-bold text-[#E2725B]">Infinity Eco-Terrazzo</h4>
-                    <p class="text-2xl font-extrabold text-[#36454F]">₹{terrazzoPricing.toLocaleString("en-IN")}</p>
+                  <div id="cost-results" class="space-y-4 text-left">
+                    <div class="bg-[#FDEFEA] p-4 rounded-lg border border-[#E2725B]/50">
+                      <h4 class="font-bold text-[#E2725B]">Infinity Eco-Terrazzo</h4>
+                      <p class="text-2xl font-extrabold text-[#36454F]">₹{terrazzoPricing.toLocaleString("en-IN")}</p>
+                    </div>
                   </div>
-                  <div class="bg-gray-100 p-4 rounded-lg border border-gray-300">
-                    <h4 class="font-bold text-gray-600">Traditional Terrazzo</h4>
-                    <p class="text-2xl font-extrabold text-gray-700">₹{normalPricing.toLocaleString("en-IN")}</p>
-                  </div>
-                  <div class="text-center mt-4">
-                    <p class="font-bold text-[#5cb562]">You save an estimated ₹{(normalPricing - terrazzoPricing).toLocaleString("en-IN")} with Infinity!</p>
-                  </div>
-                </div>
-              </form>
+                </CustomTabPanel>
+              </div>
             </div>
           </div>
 

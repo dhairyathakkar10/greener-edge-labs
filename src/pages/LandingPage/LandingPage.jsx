@@ -6,7 +6,7 @@ export const LandingPage = () => {
     <div className={styles.LandingPageContainer}>
       <div className={styles.LandingPageData}>
         <div className={styles.heading}>
-          <h1>Eterna</h1>
+          <h1>Infinity</h1>
           <span>By Greener Edge Labs</span>
         </div>
         <div className={styles.tagLine}>

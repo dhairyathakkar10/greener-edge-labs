@@ -1,3 +1,5 @@
+import customPanelsPDF from "../../assets/pdfs/customPanels.pdf";
+
 export const Products = () => {
   return (
     <section id="products" className="py-20 bg-white">
@@ -12,8 +14,10 @@ export const Products = () => {
           </div>
           <div className="product-card group cursor-pointer" data-title="Custom Panels" data-text="Prefabricated terrazzo panels for walls, countertops, and furniture. Precision-crafted to your exact specifications.">
             <div className="relative rounded-xl overflow-hidden shadow-lg">
-              <img src="https://placehold.co/600x400/36454F/FFFFFF?text=Custom+Panels" alt="Custom Panels" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" />
-              <div className="absolute inset-0 bg-black/30 flex items-center justify-center">{/* <h3 className="text-white text-2xl font-bold">Custom Panels</h3> */}</div>
+              <a href={customPanelsPDF} target="_blank" rel="noopener noreferrer">
+                <img src="https://placehold.co/600x400/36454F/FFFFFF?text=Custom+Panels" alt="Custom Panels" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" />
+                <div className="absolute inset-0 bg-black/30 flex items-center justify-center">{/* <h3 className="text-white text-2xl font-bold">Custom Panels</h3> */}</div>
+              </a>
             </div>
           </div>
           <div className="product-card group cursor-pointer" data-title="Color & Aggregate Choices" data-text="A vast library of colors and recycled aggregates like glass, marble, and recycled plastics to create your unique look.">

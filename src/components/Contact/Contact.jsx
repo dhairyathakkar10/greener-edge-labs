@@ -43,6 +43,14 @@ export const Contact = () => {
       .then(
         () => {
           setMailMessage("We've got your requirement, We'll contact you shortly");
+          setFormDetails({
+            name: "",
+            emailId: "",
+            phoneNumber: "",
+            projectSize: "",
+            product: "Cast-In-Situ Flooring",
+            message: "",
+          });
           setIsSendingMessage(false);
         },
         (error) => {

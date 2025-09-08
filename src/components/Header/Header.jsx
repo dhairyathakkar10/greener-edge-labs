@@ -6,12 +6,12 @@ import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export const Header = (props) => {
   const drawerWidth = 240;
@@ -23,13 +23,18 @@ export const Header = (props) => {
     setMobileOpen((prevState) => !prevState);
   };
 
+  const location = useLocation();
+
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <List>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={item} />
+              {/* <ListItemText primary={item} href={`${item}`} /> */}
+              <Button key={item} sx={{ color: location.hash === `#${item}` ? "red" : "black" }} href={`#${item}`}>
+                {item}
+              </Button>
             </ListItemButton>
           </ListItem>
         ))}
@@ -52,7 +57,7 @@ export const Header = (props) => {
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: "#000" }} href={`#${item}`}>
+              <Button key={item} sx={{ color: location.hash === `#${item}` ? "red" : "black" }} href={`#${item}`}>
                 {item}
               </Button>
             ))}
