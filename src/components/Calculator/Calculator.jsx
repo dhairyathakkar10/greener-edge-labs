@@ -30,9 +30,10 @@ export const Calculator = () => {
   return (
     <section id="calculators" className="py-20">
       <div className="container mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div>
+          {/* <div className="grid lg:grid-cols-2 gap-16 items-start"> */}
           <div className="space-y-16">
-            <div className="bg-white p-8 rounded-xl shadow-xl">
+            {/* <div className="bg-white p-8 rounded-xl shadow-xl">
               <h2 className="text-3xl font-bold text-center mb-6 text-[#2E2E2E]">Calculate Your Carbon Savings</h2>
               <form id="carbon-calculator">
                 <div className="mb-4">
@@ -61,7 +62,7 @@ export const Calculator = () => {
                   <span className="text-sm">{type === "infinity" ? "Compared to traditional terrazzo for the same area." : "Switch to Infinity to see your potential savings!"}</span>
                 </div>
               </form>
-            </div>
+            </div> */}
 
             <div className="bg-white p-8 rounded-xl shadow-xl">
               <h2 className="text-3xl font-bold text-center mb-6 text-[#2E2E2E]">Estimate Your Project Cost</h2>
@@ -214,7 +215,7 @@ export const Calculator = () => {
             </div>
           </div>
 
-          <div className="bg-white p-8 rounded-xl shadow-xl sticky top-28">
+          {/* <div className="bg-white p-8 rounded-xl shadow-xl sticky top-28">
             <h2 className="text-3xl font-bold text-center mb-8 text-[#2E2E2E]">Traditional vs. Infinity</h2>
             <div className="space-y-6">
               <div className="grid grid-cols-3 items-center text-center">
@@ -277,7 +278,7 @@ export const Calculator = () => {
                 <span className="text-[#E2725B]">Competitive Pricing</span>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
