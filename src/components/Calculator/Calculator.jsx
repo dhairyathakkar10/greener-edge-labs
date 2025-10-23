@@ -7,15 +7,48 @@ export const Calculator = () => {
   const [area, setArea] = useState(1000);
   const [areaForCalculation, setAreaForCalculation] = useState(1000);
   const [type, setType] = useState("Infinity");
-  const [finish, setFinish] = useState("standard");
+  const [finish, setFinish] = useState("semiMirrorPolish");
   const [tabValue, setTabValue] = useState(0);
   const [tileType, setTileType] = useState("Terrazzo");
   const [tileSizeArr, setTileSizeArr] = useState(TERRAZZO_TILE_SIZES);
   const [tileSize, setTileSize] = useState(TERRAZZO_TILE_SIZES[0]);
   const [tileThicknessArr, setTileThicknessArr] = useState(TERRAZZO_AND_PATTERN_TILE_THICKNESS);
   const [tileThickness, setTileThickness] = useState(TERRAZZO_AND_PATTERN_TILE_THICKNESS[0]);
-  const terrazzoPricing = finish === "standard" ? areaForCalculation * 250 : finish === "premium" ? areaForCalculation * 350 : areaForCalculation * 450;
-  const normalPricing = finish === "standard" ? areaForCalculation * 450 : finish === "premium" ? areaForCalculation * 550 : areaForCalculation * 650;
+  const [terrazzoPricing, setTerrazzoPricing] = useState(250 * area);
+  let [normalPricing, setNormalPricing] = useState(350 * area);
+
+  const getPricing = (selectedFinish) => {
+    switch (selectedFinish) {
+      case "semiMirrorPolish":
+        setTerrazzoPricing(250 * area);
+        setNormalPricing(350 * area);
+        break;
+      case "mirrorPolish":
+        setTerrazzoPricing(300 * area);
+        setNormalPricing(450 * area);
+        break;
+      case "leatherFinish":
+        setTerrazzoPricing(355 * area);
+        setNormalPricing(555 * area);
+        break;
+      case "diamondPolish":
+        setTerrazzoPricing(400 * area);
+        setNormalPricing(650 * area);
+        break;
+      case "matteHonedFinish":
+        setTerrazzoPricing(285 * area);
+        setNormalPricing(485 * area);
+        break;
+      case "rusticAntiSlip":
+        setTerrazzoPricing(325 * area);
+        setNormalPricing(480 * area);
+        break;
+      default:
+        setTerrazzoPricing(0);
+        setNormalPricing(0);
+        break;
+    }
+  };
 
   const CustomTabPanel = (props) => {
     const { children, value, index, ...other } = props;
@@ -88,10 +121,21 @@ export const Calculator = () => {
                       <label htmlFor="finish-type" className="block font-bold mb-1">
                         Finish Type
                       </label>
-                      <select id="finish-type" value={finish} onChange={(e) => setFinish(e.target.value)} className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50">
-                        <option value="standard">Standard Finish</option>
-                        <option value="premium">Premium Finish</option>
-                        <option value="designer">Designer Finish</option>
+                      <select
+                        id="finish-type"
+                        value={finish}
+                        onChange={(e) => {
+                          setFinish(e.target.value);
+                          getPricing(e.target.value);
+                        }}
+                        className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50"
+                      >
+                        <option value="semiMirrorPolish">Semi-Mirror Polish</option>
+                        <option value="mirrorPolish">Mirror Polish</option>
+                        <option value="leatherFinish">Leather Finish</option>
+                        <option value="diamondPolish">Diamond Polish</option>
+                        <option value="matteHonedFinish">Matte Honed Finish</option>
+                        <option value="rusticAntiSlip">Rustic Anti Slip</option>
                       </select>
                     </div>
                     {/* <div id="cost-results" className="space-y-4"></div> */}

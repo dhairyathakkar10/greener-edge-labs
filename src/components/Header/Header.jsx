@@ -24,7 +24,6 @@ export const Header = (props) => {
   };
 
   const location = useLocation();
-  console.log(location);
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>

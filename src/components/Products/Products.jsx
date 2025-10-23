@@ -1,4 +1,5 @@
 import customPanelsPDF from "../../assets/pdfs/customPanels.pdf";
+import colorChoicePDF from "../../assets/pdfs/colorOptions.pdf";
 
 export const Products = () => {
   return (
@@ -22,8 +23,10 @@ export const Products = () => {
           </div>
           <div className="product-card group cursor-pointer" data-title="Color & Aggregate Choices" data-text="A vast library of colors and recycled aggregates like glass, marble, and recycled plastics to create your unique look.">
             <div className="relative rounded-xl overflow-hidden shadow-lg">
-              <img src="https://placehold.co/600x400/FDEFEA/36454F?text=Color+Choices" alt="Color & Aggregate Choices" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" />
-              <div className="absolute inset-0 bg-black/30 flex items-center justify-center">{/* <h3 className="text-white text-2xl font-bold">Color & Aggregate Choices</h3> */}</div>
+              <a href={colorChoicePDF} target="_blank" rel="noopener noreferrer">
+                <img src="https://placehold.co/600x400/FDEFEA/36454F?text=Color+Choices" alt="Color & Aggregate Choices" className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" />
+                <div className="absolute inset-0 bg-black/30 flex items-center justify-center">{/* <h3 className="text-white text-2xl font-bold">Color & Aggregate Choices</h3> */}</div>
+              </a>
             </div>
           </div>
         </div>

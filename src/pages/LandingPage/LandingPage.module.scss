@@ -1,5 +1,5 @@
 .LandingPageContainer {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5)), url(../../assets/images/landingPageBGFinal.png);
+  // background-image: linear-gradient(rgba(0, 0, 0, 0.5)), url(../../assets/images/landingPageBGFinal.png);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   height: 100%;
@@ -16,21 +16,25 @@
   align-items: center;
   flex-direction: column;
   font-family: "Agatho";
-  color: #a39b91;
+  color: #9eb563;
+  z-index: 999;
   .heading {
-    h1 {
-      text-transform: uppercase;
-      font-size: 4.8rem;
-      line-height: 1;
-    }
-    span {
-      text-transform: uppercase;
-      font-size: 1.8rem;
-      color: #5cb562;
+    // h1 {
+    //   text-transform: uppercase;
+    //   font-size: 4.8rem;
+    //   line-height: 1;
+    // }
+    // span {
+    //   text-transform: uppercase;
+    //   font-size: 1.8rem;
+    //   color: #5cb562;
+    // }
+    img {
+      height: 10rem;
     }
   }
   .tagLine {
-    font-size: 4.8rem;
+    font-size: 4rem;
     line-height: 1.2;
   }
   button {
